@@ -18,9 +18,7 @@ productos = []
 def index():
     return{'message': "Bienvenidos a la api de productos"}
 
-@app.get('/producto')
-def obtener_productos():
-    return productos
+#? CREATE
 
 @app.post('/producto')
 def crear_producto(producto: Producto):
@@ -28,11 +26,31 @@ def crear_producto(producto: Producto):
     productos.append(producto)
     return {'message': "Producto creado satisfactoriamente"}
 
+#? READ
+
+@app.get('/producto')
+def obtener_productos():
+    return productos
+
 @app.get('/producto/{producto_id}')
 def obtener_producto_por_id(producto_id: str):
     resultado = list(filter(lambda p: p.id == producto_id, productos))
     
     if len(resultado):
         return resultado[0]
+    
+    raise HTTPException(status_code=404, detail=f"El producto con el id {producto_id} no fue encontrado")
+
+#? DELETE
+
+@app.delete('/producto/{producto_id}')
+def eliminar_producto_por_id(producto_id: str):
+    resultado = list(filter(lambda p: p.id == producto_id, productos))
+    
+    if len(resultado):
+        producto = producto[0]
+        productos.remove(producto)
+        
+        return {'message': f'El producto con el id {producto_id} fue eliminado'}
     
     raise HTTPException(status_code=404, detail=f"El producto con el id {producto_id} no fue encontrado")
