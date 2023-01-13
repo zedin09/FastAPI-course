@@ -1,11 +1,11 @@
-def get_full_name(first_name, last_name):
+def get_full_name1(first_name, last_name):
     full_name = first_name.title() + ' ' + last_name.title()
     return full_name
 
 print(get_full_name('john', 'ortiz'))
 #? sin tipado en los parámetros de la fn no hay autocompletado
 
-def get_full_name(first_name: str, last_name: str):
+def get_full_name2(first_name: str, last_name: str):
     full_name = first_name.title() + ' ' + last_name.title()
     return full_name
 
