@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from uuid import uuid4 as uuid
+
 class Producto(BaseModel):
     id: str | None
     nombre: str
@@ -22,5 +24,6 @@ def obtener_productos():
 
 @app.post('/producto')
 def crear_producto(producto: Producto):
+    producto.id = str(uuid())
     productos.append(producto)
     return {'message': "Producto creado satisfactoriamente"}
